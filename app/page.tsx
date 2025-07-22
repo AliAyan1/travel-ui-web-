@@ -7,11 +7,25 @@ import Hero from "@/components/Hero";
 export default function Home() {
   return (
     <>
-      <Hero />
-      <Camp />
-      <Guide />
-      <Features />
-      <GetApp />
+      <section id="home">
+        <Hero />
+      </section>
+
+      <section id="how-hilink-work">
+        <Camp />
+      </section>
+
+      <section id="services">
+        <Guide />
+      </section>
+
+      <section id="pricing">
+        <Features />
+      </section>
+
+      <section id="contact-us">
+        <GetApp />
+      </section>
     </>
-  )
+  );
 }
