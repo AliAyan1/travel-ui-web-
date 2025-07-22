@@ -1,11 +1,14 @@
 "use client";
 
+import { useState } from "react";
 import { NAV_LINKS } from "@/constants";
 import Image from "next/image";
 import Link from "next/link";
 import Button from "./Button";
 
 const Navbar = () => {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
   return (
     <nav className="flexBetween max-container padding-container relative z-30 py-5">
       {/* Logo */}
@@ -13,7 +16,7 @@ const Navbar = () => {
         <Image src="/hilink-logo.svg" alt="logo" width={74} height={29} />
       </Link>
 
-      {/* Nav Links */}
+      {/* Desktop Nav Links */}
       <ul className="hidden h-full gap-12 lg:flex">
         {NAV_LINKS.map((link) => (
           <li key={link.key}>
@@ -39,13 +42,44 @@ const Navbar = () => {
       </div>
 
       {/* Mobile Menu Icon */}
-      <Image
-        src="/menu.svg"
-        alt="menu"
-        width={32}
-        height={32}
-        className="inline-block cursor-pointer lg:hidden"
-      />
+      <div className="lg:hidden">
+        <Image
+          src="/menu.svg"
+          alt="menu"
+          width={32}
+          height={32}
+          className="cursor-pointer"
+          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+        />
+      </div>
+
+      {/* Mobile Nav Menu */}
+      {mobileMenuOpen && (
+        <div className="absolute top-20 left-0 w-full bg-white z-50 p-6 shadow-md lg:hidden">
+          <ul className="flex flex-col gap-6">
+            {NAV_LINKS.map((link) => (
+              <li key={link.key}>
+                <Link
+                  href={link.href}
+                  scroll={true}
+                  className="text-gray-900 text-lg font-medium"
+                  onClick={() => setMobileMenuOpen(false)} // close menu on click
+                >
+                  {link.label}
+                </Link>
+              </li>
+            ))}
+            <li>
+              <Button
+                type="button"
+                title="Login"
+                icon="/user.svg"
+                variant="btn_dark_green"
+              />
+            </li>
+          </ul>
+        </div>
+      )}
     </nav>
   );
 };
